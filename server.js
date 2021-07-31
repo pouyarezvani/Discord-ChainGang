@@ -11,7 +11,7 @@ bot.on('ready', () => {
     console.info(`Logged in as ${bot.user.tag}!`);
 });
 
-bot.on('message', msg => {
+bot.on('message', async msg => {
 
     // let targetChanel = msg.guild.channels.cache.get('860809577595666432')
     if (msg.channel.id == '860809577595666432') {
@@ -24,6 +24,6 @@ bot.on('message', msg => {
                 return false
             }
         }
-        if (!inputChecker(input)) msg.delete()
+        if (!inputChecker(input)) await msg.delete()
     }
 });
