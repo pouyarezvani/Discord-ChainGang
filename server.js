@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
 
-let lastEnteredNumber = 56;
+let lastEnteredNumber = 57;
 
 bot.login(TOKEN);
 
