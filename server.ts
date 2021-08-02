@@ -21,8 +21,6 @@ const bot: Bot = new Discord.Client();
 
 bot.login(TOKEN);
 
-// let lastEnteredNumber: number = 0;
-
 
 function isChannelId(id: string): any {
     return id == CHAIN_GANG_CHANNEL_ID
@@ -80,15 +78,6 @@ const isMessageValid = async (currentMessage: Message): Promise<boolean> => {
 
 bot.on('ready', async () => {
     console.info(`Logged in as ${bot.user.tag}!`);
-    // try {
-    //     let channel = bot.channels.cache.get(CHAIN_GANG_CHANNEL_ID);
-    //     const res = await channel.messages.fetch({ limit: 1 })
-    //     let lastMessage = res.first();
-    //     lastEnteredNumber = parseInt(lastMessage.content);
-    //     console.log('lastEnteredNumber inside ready: ', lastEnteredNumber)
-    // } catch (e) {
-    //     console.log(e)
-    // }
 });
 
 bot.on('message', async (msg?: Message) => {
