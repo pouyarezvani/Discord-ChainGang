@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+    "strict": true,
+      "module": "commonjs",
+      "target": "es2019",
+      "noImplicitAny": true,
+      "sourceMap": true,
+      "outDir": ".",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "declaration": true,
+      "importHelpers": true,
+      "forceConsistentCasingInFileNames": true,
+      "lib": [
+        "ES2020",
+        "ES2017",
+      ],
+      "moduleResolution": "node",
+      "types": [ "node" ],
+      "typeRoots": [ "../node_modules/@types" ]
+    },
+    "include": ["server.ts"],
+    "exclude": [
+      "node_modules"
+    ]
+   
+  }
