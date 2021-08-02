@@ -56,9 +56,13 @@ var isMessageValid = function (currentMessage) { return __awaiter(_this, void 0,
             case 1:
                 res = _a.sent();
                 lastMessage = res.last() || { content: "0" };
-                lastEnteredNumber = parseInt(lastMessage.content);
+                lastEnteredNumber = +lastMessage.content;
+                if (isNaN(lastEnteredNumber))
+                    return [2 /*return*/, Promise.resolve(false)];
                 console.log('lastEnteredNumber inside isMessageValid ', lastEnteredNumber);
-                currentEnteredNumber = parseInt(currentMessage.content);
+                currentEnteredNumber = +currentMessage.content;
+                if (isNaN(currentEnteredNumber))
+                    return [2 /*return*/, Promise.resolve(false)];
                 console.log('currentEnteredNumber inside isMessageValid ', currentEnteredNumber);
                 return [2 /*return*/, currentEnteredNumber === lastEnteredNumber + 1];
         }
@@ -79,15 +83,21 @@ bot.on('message', function (msg) { return __awaiter(_this, void 0, void 0, funct
                     console.log("on message handler had no message. this is an error.");
                     return [2 /*return*/];
                 }
-                if (!isChannelId(msg.channel.id)) return [3 /*break*/, 2];
+                if (!isChannelId(msg.channel.id)) return [3 /*break*/, 4];
                 console.log('user input in the channel', msg.content);
-                return [4 /*yield*/, isMessageValid(msg)];
+                isValid = false;
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, , 3, 4]);
+                return [4 /*yield*/, isMessageValid(msg)];
+            case 2:
                 isValid = _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
                 if (!isValid)
                     msg["delete"]();
-                _a.label = 2;
-            case 2: return [2 /*return*/];
+                return [7 /*endfinally*/];
+            case 4: return [2 /*return*/];
         }
     });
 }); });

@@ -66,10 +66,12 @@ const isMessageValid = async (currentMessage: Message): Promise<boolean> => {
     const res = await channel.messages.fetch({ limit: 2 })
     const lastMessage = res.last() || {content: "0"};
 
-    const lastEnteredNumber = parseInt(lastMessage.content);
+    const lastEnteredNumber = +lastMessage.content;
+    if (isNaN(lastEnteredNumber)) return Promise.resolve(false);
     console.log('lastEnteredNumber inside isMessageValid ', lastEnteredNumber);
 
-    const currentEnteredNumber = parseInt(currentMessage.content);
+    const currentEnteredNumber = +currentMessage.content;
+    if (isNaN(currentEnteredNumber)) return Promise.resolve(false);
     console.log('currentEnteredNumber inside isMessageValid ', currentEnteredNumber);
 
     return currentEnteredNumber === lastEnteredNumber + 1;
@@ -87,7 +89,11 @@ bot.on('message', async (msg?: Message) => {
     }
     if (isChannelId(msg.channel.id)) {
         console.log('user input in the channel', msg.content)
-        let isValid = await isMessageValid(msg);
-        if (!isValid) msg.delete()
+        let isValid = false;
+        try {
+            isValid = await isMessageValid(msg);
+        } finally {
+            if (!isValid) msg.delete()
+        }
     }
 });
