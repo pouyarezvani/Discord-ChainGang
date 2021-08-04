@@ -58,13 +58,14 @@ interface Message {
     channel: Channel
     content: string
     delete: Function
+    author: string
     fetch: (params: FetchParams) => Promise<FetchResult>
 }
 
 const isMessageValid = async (currentMessage: Message): Promise<boolean> => {
     let channel = currentMessage.channel;
     const res = await channel.messages.fetch({ limit: 2 })
-    const lastMessage = res.last() || { content: "0" };
+    const lastMessage = res.last() || { content: "0", author: "" };
 
     const lastEnteredNumber = +lastMessage.content;
     if (isNaN(lastEnteredNumber)) return Promise.resolve(false);
@@ -73,6 +74,7 @@ const isMessageValid = async (currentMessage: Message): Promise<boolean> => {
     const currentEnteredNumber = +currentMessage.content;
     if (isNaN(currentEnteredNumber)) return Promise.resolve(false);
     if (!currentMessage.content.match(/^[1-9][0-9]*$/)) return Promise.resolve(false);
+    if (currentMessage.author === lastMessage.author) return Promise.resolve(false);
     console.log('currentEnteredNumber inside isMessageValid ', currentEnteredNumber);
 
     return currentEnteredNumber === lastEnteredNumber + 1;
