@@ -1,4 +1,4 @@
-import { Message, User } from 'discord.js';
+import { Client, Message } from 'discord.js';
 
 if (process.env.NODE_ENV !== 'PROD') require('dotenv').config();
 const Discord = require('discord.js');
@@ -6,14 +6,7 @@ const CHAIN_GANG_CHANNEL_ID = '860809577595666432'
 const TOKEN: string = process.env.TOKEN || "";
 if (TOKEN === "") throw new Error("TOKEN env var not found");
 
-type EventHandler = (msg?: Message) => Promise<void>
-interface Bot {
-    login: (token: string) => null
-    user: User
-    on: (event: string, handler: EventHandler) => null
-}
-
-const bot: Bot = new Discord.Client();
+const client: Client = new Discord.Client();
 
 function isChannelId(id: string): any {
     return id == CHAIN_GANG_CHANNEL_ID
@@ -38,11 +31,11 @@ const isMessageValid = async (currentMessage: Message): Promise<boolean> => {
     return currentEnteredNumber === lastEnteredNumber + 1;
 }
 
-bot.on('ready', async () => {
-    console.info(`Logged in as ${bot.user.tag}!`);
+client.on('ready', async () => {
+    console.info(`Logged in as ${client.user?.tag}!`);
 });
 
-bot.on('message', async (msg?: Message) => {
+client.on('message', async (msg?: Message) => {
     if (!msg) {
         console.log("on message handler had no message. this is an error.");
         return;
@@ -58,4 +51,4 @@ bot.on('message', async (msg?: Message) => {
     }
 });
 
-bot.login(TOKEN);
+client.login(TOKEN);

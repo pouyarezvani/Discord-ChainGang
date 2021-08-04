@@ -43,7 +43,7 @@ var CHAIN_GANG_CHANNEL_ID = '860809577595666432';
 var TOKEN = process.env.TOKEN || "";
 if (TOKEN === "")
     throw new Error("TOKEN env var not found");
-var bot = new Discord.Client();
+var client = new Discord.Client();
 function isChannelId(id) {
     return id == CHAIN_GANG_CHANNEL_ID;
 }
@@ -76,13 +76,14 @@ var isMessageValid = function (currentMessage) { return __awaiter(void 0, void 0
         }
     });
 }); };
-bot.on('ready', function () { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        console.info("Logged in as " + bot.user.tag + "!");
+client.on('ready', function () { return __awaiter(void 0, void 0, void 0, function () {
+    var _a;
+    return __generator(this, function (_b) {
+        console.info("Logged in as " + ((_a = client.user) === null || _a === void 0 ? void 0 : _a.tag) + "!");
         return [2 /*return*/];
     });
 }); });
-bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
+client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
     var isValid;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -109,4 +110,4 @@ bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); });
-bot.login(TOKEN);
+client.login(TOKEN);
