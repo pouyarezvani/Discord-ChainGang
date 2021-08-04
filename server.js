@@ -61,7 +61,7 @@ var isMessageValid = function (currentMessage) { return __awaiter(_this, void 0,
                     return [2 /*return*/, Promise.resolve(false)];
                 console.log('lastEnteredNumber inside isMessageValid ', lastEnteredNumber);
                 currentEnteredNumber = +currentMessage.content;
-                if (isNaN(currentEnteredNumber))
+                if (isNaN(currentEnteredNumber) && currentMessage.content.match(/^[1-9][0-9]*$/))
                     return [2 /*return*/, Promise.resolve(false)];
                 console.log('currentEnteredNumber inside isMessageValid ', currentEnteredNumber);
                 return [2 /*return*/, currentEnteredNumber === lastEnteredNumber + 1];

@@ -71,7 +71,7 @@ const isMessageValid = async (currentMessage: Message): Promise<boolean> => {
     console.log('lastEnteredNumber inside isMessageValid ', lastEnteredNumber);
 
     const currentEnteredNumber = +currentMessage.content;
-    if (isNaN(currentEnteredNumber)) return Promise.resolve(false);
+    if (isNaN(currentEnteredNumber) && currentMessage.content.match(/^[1-9][0-9]*$/)) return Promise.resolve(false);
     console.log('currentEnteredNumber inside isMessageValid ', currentEnteredNumber);
 
     return currentEnteredNumber === lastEnteredNumber + 1;
