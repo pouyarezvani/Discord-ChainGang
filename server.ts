@@ -1,6 +1,6 @@
 import { Message, User } from 'discord.js';
 
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'PROD') require('dotenv').config();
 const Discord = require('discord.js');
 const CHAIN_GANG_CHANNEL_ID = '860809577595666432'
 const TOKEN: string = process.env.TOKEN || "";
