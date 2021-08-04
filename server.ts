@@ -22,7 +22,7 @@ function isChannelId(id: string): any {
 const isMessageValid = async (currentMessage: Message): Promise<boolean> => {
     let channel = currentMessage.channel;
     const res = await channel.messages.fetch({ limit: 2 })
-    const lastMessage = res.last() || { content: "0", author: null};
+    const lastMessage = res.last() || { content: "0", author: null };
 
     const lastEnteredNumber = +lastMessage.content;
     if (isNaN(lastEnteredNumber)) return Promise.resolve(false);
@@ -31,6 +31,7 @@ const isMessageValid = async (currentMessage: Message): Promise<boolean> => {
     const currentEnteredNumber = +currentMessage.content;
     if (isNaN(currentEnteredNumber)) return Promise.resolve(false);
     if (!currentMessage.content.match(/^[1-9][0-9]*$/)) return Promise.resolve(false);
+    if (!currentMessage.author) return Promise.resolve(false);
     if (currentMessage.author?.id === lastMessage.author?.id) return Promise.resolve(false);
     console.log('currentEnteredNumber inside isMessageValid ', currentEnteredNumber);
 

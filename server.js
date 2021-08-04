@@ -36,7 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'PROD')
+    require('dotenv').config();
 var Discord = require('discord.js');
 var CHAIN_GANG_CHANNEL_ID = '860809577595666432';
 var TOKEN = process.env.TOKEN || "";
@@ -65,6 +66,8 @@ var isMessageValid = function (currentMessage) { return __awaiter(void 0, void 0
                 if (isNaN(currentEnteredNumber))
                     return [2 /*return*/, Promise.resolve(false)];
                 if (!currentMessage.content.match(/^[1-9][0-9]*$/))
+                    return [2 /*return*/, Promise.resolve(false)];
+                if (!currentMessage.author)
                     return [2 /*return*/, Promise.resolve(false)];
                 if (((_a = currentMessage.author) === null || _a === void 0 ? void 0 : _a.id) === ((_b = lastMessage.author) === null || _b === void 0 ? void 0 : _b.id))
                     return [2 /*return*/, Promise.resolve(false)];
