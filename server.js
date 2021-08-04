@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
+exports.__esModule = true;
 require('dotenv').config();
 var Discord = require('discord.js');
 var CHAIN_GANG_CHANNEL_ID = '860809577595666432';
@@ -42,20 +43,20 @@ var TOKEN = process.env.TOKEN || "";
 if (TOKEN === "")
     throw new Error("TOKEN env var not found");
 var bot = new Discord.Client();
-bot.login(TOKEN);
 function isChannelId(id) {
     return id == CHAIN_GANG_CHANNEL_ID;
 }
-var isMessageValid = function (currentMessage) { return __awaiter(_this, void 0, void 0, function () {
+var isMessageValid = function (currentMessage) { return __awaiter(void 0, void 0, void 0, function () {
     var channel, res, lastMessage, lastEnteredNumber, currentEnteredNumber;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a, _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
                 channel = currentMessage.channel;
                 return [4 /*yield*/, channel.messages.fetch({ limit: 2 })];
             case 1:
-                res = _a.sent();
-                lastMessage = res.last() || { content: "0" };
+                res = _c.sent();
+                lastMessage = res.last() || { content: "0", author: null };
                 lastEnteredNumber = +lastMessage.content;
                 if (isNaN(lastEnteredNumber))
                     return [2 /*return*/, Promise.resolve(false)];
@@ -65,18 +66,20 @@ var isMessageValid = function (currentMessage) { return __awaiter(_this, void 0,
                     return [2 /*return*/, Promise.resolve(false)];
                 if (!currentMessage.content.match(/^[1-9][0-9]*$/))
                     return [2 /*return*/, Promise.resolve(false)];
+                if (((_a = currentMessage.author) === null || _a === void 0 ? void 0 : _a.id) === ((_b = lastMessage.author) === null || _b === void 0 ? void 0 : _b.id))
+                    return [2 /*return*/, Promise.resolve(false)];
                 console.log('currentEnteredNumber inside isMessageValid ', currentEnteredNumber);
                 return [2 /*return*/, currentEnteredNumber === lastEnteredNumber + 1];
         }
     });
 }); };
-bot.on('ready', function () { return __awaiter(_this, void 0, void 0, function () {
+bot.on('ready', function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         console.info("Logged in as " + bot.user.tag + "!");
         return [2 /*return*/];
     });
 }); });
-bot.on('message', function (msg) { return __awaiter(_this, void 0, void 0, function () {
+bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
     var isValid;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -103,3 +106,4 @@ bot.on('message', function (msg) { return __awaiter(_this, void 0, void 0, funct
         }
     });
 }); });
+bot.login(TOKEN);
