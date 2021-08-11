@@ -120,6 +120,8 @@ client.on('messageUpdate', function (oldMessage, newMessage) { return __awaiter(
         switch (_a.label) {
             case 0:
                 if (!isChannelId(newMessage.channel.id)) return [3 /*break*/, 4];
+                if (newMessage)
+                    newMessage["delete"]();
                 isValid = false;
                 _a.label = 1;
             case 1:

@@ -56,6 +56,7 @@ client.on('message', async (msg?: Message) => {
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
     if (isChannelId(newMessage.channel.id)) {
+        if (newMessage) newMessage.delete();
         let isValid = false;
         try {
             isValid = await isMessageValid(newMessage as Message);
