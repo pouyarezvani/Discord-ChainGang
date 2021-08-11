@@ -115,27 +115,18 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
     });
 }); });
 client.on('messageUpdate', function (oldMessage, newMessage) { return __awaiter(void 0, void 0, void 0, function () {
-    var isValid;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                if (!isChannelId(newMessage.channel.id)) return [3 /*break*/, 4];
-                if (newMessage)
-                    newMessage["delete"]();
-                isValid = false;
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, , 3, 4]);
-                return [4 /*yield*/, isMessageValid(newMessage)];
-            case 2:
-                isValid = _a.sent();
-                return [3 /*break*/, 4];
-            case 3:
-                if (!isValid)
-                    newMessage["delete"]();
-                return [7 /*endfinally*/];
-            case 4: return [2 /*return*/];
+        if (isChannelId(newMessage.channel.id)) {
+            newMessage["delete"]();
+            // if (newMessage.content !== oldMessage.content) newMessage.delete();
+            // let isValid = false;
+            // try {
+            //     isValid = await isMessageValid(newMessage as Message);
+            // } finally {
+            //     if (!isValid) newMessage.delete()
+            // }
         }
+        return [2 /*return*/];
     });
 }); });
 // client.on('message', async (msg?: string) => {
