@@ -36,10 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+// import {RollDice} from './diceRoll';
 if (process.env.NODE_ENV !== 'PROD')
     require('dotenv').config();
 var Discord = require('discord.js');
 var CHAIN_GANG_CHANNEL_ID = '860809577595666432';
+// const DND_DICE_ROLL_CHANNEL_ID_1 = '873428265048629278'
+// const DND_DICE_ROLL_CHANNEL_ID_2 = ''
+// const DND_DICE_ROLL_CHANNEL_ID_3 = ''
 var TOKEN = process.env.TOKEN || "";
 if (TOKEN === "")
     throw new Error("TOKEN env var not found");
@@ -110,4 +114,41 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
         }
     });
 }); });
+client.on('messageUpdate', function (oldMessage, newMessage) { return __awaiter(void 0, void 0, void 0, function () {
+    var isValid;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!isChannelId(newMessage.channel.id)) return [3 /*break*/, 4];
+                isValid = false;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, , 3, 4]);
+                return [4 /*yield*/, isMessageValid(newMessage)];
+            case 2:
+                isValid = _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                if (!isValid)
+                    newMessage["delete"]();
+                return [7 /*endfinally*/];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+// client.on('message', async (msg?: string) => {
+//     if (msg.channel.id === DND_DICE_ROLL_CHANNEL_ID_1) {
+//     }
+//     if (msg.content === 'ping') {
+//         msg.reply('pong');
+//         msg.channel.send('pong');
+//       } else if (msg.content.startsWith('!kick')) {
+//         if (msg.mentions.users.size) {
+//           const taggedUser = msg.mentions.users.first();
+//           msg.channel.send(`You wanted to kick: ${taggedUser.username}`);
+//         } else {
+//           msg.reply('Please tag a valid user!');
+//         }
+//       }
+// })
 client.login(TOKEN);

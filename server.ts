@@ -1,8 +1,11 @@
-import { Client, Message } from 'discord.js';
-
+import { Client, Message, PartialMessage } from 'discord.js';
+// import {RollDice} from './diceRoll';
 if (process.env.NODE_ENV !== 'PROD') require('dotenv').config();
 const Discord = require('discord.js');
 const CHAIN_GANG_CHANNEL_ID = '860809577595666432'
+// const DND_DICE_ROLL_CHANNEL_ID_1 = '873428265048629278'
+// const DND_DICE_ROLL_CHANNEL_ID_2 = ''
+// const DND_DICE_ROLL_CHANNEL_ID_3 = ''
 const TOKEN: string = process.env.TOKEN || "";
 if (TOKEN === "") throw new Error("TOKEN env var not found");
 
@@ -50,5 +53,36 @@ client.on('message', async (msg?: Message) => {
         }
     }
 });
+
+client.on('messageUpdate', async (oldMessage, newMessage) => {
+    if (isChannelId(newMessage.channel.id)) {
+        let isValid = false;
+        try {
+            isValid = await isMessageValid(newMessage as Message);
+        } finally {
+            if (!isValid) newMessage.delete()
+        }
+    }
+});
+
+
+
+// client.on('message', async (msg?: string) => {
+//     if (msg.channel.id === DND_DICE_ROLL_CHANNEL_ID_1) {
+
+//     }
+//     if (msg.content === 'ping') {
+//         msg.reply('pong');
+//         msg.channel.send('pong');
+    
+//       } else if (msg.content.startsWith('!kick')) {
+//         if (msg.mentions.users.size) {
+//           const taggedUser = msg.mentions.users.first();
+//           msg.channel.send(`You wanted to kick: ${taggedUser.username}`);
+//         } else {
+//           msg.reply('Please tag a valid user!');
+//         }
+//       }
+// })
 
 client.login(TOKEN);
